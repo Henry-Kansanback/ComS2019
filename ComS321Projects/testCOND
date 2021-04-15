@@ -1,0 +1,90 @@
+ADDI X0, X0, #1
+SUBIS X1, X0, #1
+
+B.EQ oneEQone
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+oneEQone:
+ADDI X0, X0, #1
+SUBS X1, X2, X0
+
+B.NE notEqual
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+notEqual:
+ADDI X0, X0, #1
+SUBIS X1, X0, #0
+
+B.HS gtHS
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+gtHS:
+ADDI X0, X0, #1
+SUBIS X1, X0, #4
+
+B.HS etHS
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+etHS:
+ADDI X0, X0, #1
+SUBIS X1, X0, #6
+
+B.LO lessThan
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+lessThan:
+ADDI X0, X0, #1
+SUBIS X1, X0, #10
+
+B.MI lessThanMI
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+lessThanMI:
+ADDI X0, X0, #1
+SUBIS X1, X0, #7
+
+B.PL eqPL
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+eqPL:
+ADDI X0, X0, #1
+SUBIS X1, X0, #0
+
+B.PL ltPL
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+ltPL:
+ADDI X0, X0, #1
+SUBIS X1, X0, #0
+
+B.HI greaterThan
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+greaterThan:
+ADDI X0, X0, #1
+SUBIS X1, X0, #20
+
+B.LS lessThanLS
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+lessThanLS:
+ADDI X0, X0, #1
+SUBIS X1, X0, #11
+
+B.LS equalLS
+ADDI X0, X0, #5
+ADDI X0, X0, #5
+
+equalLS:
+ADDI X0, X0, #1
+DUMP

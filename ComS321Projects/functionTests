@@ -1,0 +1,4 @@
+ADDI X2, X1, #5
+ADDI X4, X3, #13
+ORR X5, X4, X2
+DUMP

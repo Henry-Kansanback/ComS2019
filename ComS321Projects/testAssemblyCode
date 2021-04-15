@@ -1,0 +1,12 @@
+SUB X0, X0, X0
+B.NE Go
+Go:
+ADDI X0, X0, #0
+ADDI X1, X1, #15
+ADDI X2, X2, #160
+STUR X1, [X0, #0]
+STUR X2, [X1, #0]
+B Yolo
+CBZ X0, Yolo
+Yolo:
+DUMP

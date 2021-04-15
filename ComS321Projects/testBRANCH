@@ -1,0 +1,10 @@
+ADDI X0, X0, #1
+B noIncrement
+ADDI X0, X0, #1
+ADDI X0, X0, #1
+ADDI X0, X0, #1
+ADDI X0, X0, #1
+ADDI X0, X0, #1
+noIncrement:
+ADDI X0, X0, #1
+DUMP

@@ -1,0 +1,4 @@
+ADDI X0, X0, #8
+ADD X1, X1, X0
+ADDI X1, X1, #8
+DUMP

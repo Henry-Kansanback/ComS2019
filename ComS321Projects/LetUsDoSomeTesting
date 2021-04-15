@@ -1,0 +1,33 @@
+ADDI X0, X0, #0
+ADDI X1, X0, #1
+ADDI X2, X0, #2
+
+ADDI X3, X0, #3
+ADDI X4, X0, #4
+ADDI X5, X0, #5
+
+ADDI X6, X0, #6
+ADDI X7, X0, #7
+ADDI X8, X0, #8
+
+CBZ X0, Loop
+
+STUR X8, [X0, #0]
+
+Loop:
+
+CBNZ X1, End
+
+STUR X9, [x1, #0]
+
+End:
+
+BL a
+
+ADDI X9, X0, #9
+ADDI X10, X0, #10
+ADDI X11, X0, #11
+
+a:
+
+DUMP

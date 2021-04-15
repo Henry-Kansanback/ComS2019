@@ -1,0 +1,252 @@
+
+main:
+ADDI X19, XZR, #8 //array 
+ADDI X20, XZR, #64 //length
+ADD X0, XZR, X19 //array
+ADD X1, XZR, X20 //length
+BL arrayBuilder
+BL selectSort
+ADD X0, XZR, X19
+ADD X1, XZR, XZR
+ADDI X2, XZR, #63
+ADDI X3, XZR, #48
+BL iterBinSearch  
+ADD X21, X0, XZR //save return of iterBinSearch
+ADD X0, XZR, X19
+BL recBinSearch
+ADD X22, X0, XZR //save return of recBinSearch
+SUB X23, X21, X22 //iterBinSearch - recBinSearch
+STUR X23, [XZR, #0] //store in main memory, 0 offset
+B end
+
+
+arrayBuilder:
+SUBI SP, SP, #40
+STUR LR, [SP, #32]
+STUR X12, [SP, #24]
+STUR X11, [SP, #16]
+STUR X10, [SP, #8]
+STUR X9, [SP, #0]
+
+ADD X9, XZR, XZR // i = 0
+ADD X10, X1, XZR // j = length
+fill: 
+SUBS X11, X9, X1 // compare i and length
+B.GE exitAB // jump to exit
+LSL X12, X9, #3 // multiply i*8
+ADD X12, X0, X12 // find array[i]
+STUR X10, [X12, #0] // store X10 in array[i]
+SUBI X10, X10, #1 //Decrement j
+ADDI X9, X9, #1 //increment i
+B fill 
+
+exitAB:
+LDUR X9, [SP, #0]
+LDUR X10, [SP, #8]
+LDUR X11, [SP, #16]
+LDUR X12, [SP, #24]
+LDUR LR, [SP, #32]
+ADDI SP, SP, #40
+BR LR
+
+swap:
+SUBI SP, SP, #24
+STUR LR, [SP, #16]
+STUR X10, [SP, #8]
+STUR X9, [SP, #0]
+
+LDUR X9, [X0, #0]
+LDUR X10, [X1, #0]
+STUR X9, [X1, #0]
+STUR X10, [X0, #0]
+
+LDUR X9, [SP, #0]
+LDUR X10, [SP, #8]
+LDUR LR, [SP, #16]
+ADDI SP, SP, #24
+BR LR
+
+findSmallest:
+SUBI SP, SP, #48
+STUR LR, [SP, #40]
+STUR X13, [SP, #32]
+STUR X12, [SP, #24]
+STUR X11, [SP, #16]
+STUR X10, [SP, #8]
+STUR X9, [SP, #0]
+
+ADD X9, XZR, X1 //smallest = start
+ADDI X10, X1, #1 // i = start + 1
+findLoop:
+SUBS X11, X10, X2 // compare i and length
+B.GE exitFS // jump to exit if i >= length
+LSL X12, X9, #3 // smallest*8
+ADD X12, X12, X0 //X0+smallest*8
+LDUR X12, [X12, #0] // load array[smallest]
+LSL X13, X10, #3 // i*8
+ADD X13, X13, X0 //X0+i*8
+LDUR X13, [X13, #0] //load array[i]
+SUBS X11, X13, X12
+B.GE iBigger
+ADD X9, X10, XZR
+iBigger:
+ADDI X10, X10, #1 // increment i
+B findLoop
+exitFS:
+
+ADD X0, X9, XZR
+LDUR X9, [SP, #0]
+LDUR X10, [SP, #8]
+LDUR X11, [SP, #16]
+LDUR X12, [SP, #24]
+LDUR X13, [SP, #32]
+LDUR LR, [SP, #40]
+ADDI SP, SP, #48
+BR LR
+
+selectSort:
+SUBI SP, SP, #64
+STUR LR, [SP, #56]
+STUR X15, [SP, #48]
+STUR X14, [SP, #40]
+STUR X13, [SP, #32]
+STUR X12, [SP, #24]
+STUR X11, [SP, #16]
+STUR X10, [SP, #8]
+STUR X9, [SP, #0]
+
+ADD X9, X0, XZR // save array address
+ADD X10, X1, XZR // save length
+
+ADD X11, XZR, XZR // i = 0
+sortLoop:
+SUBS X12, X11, X10 // compare i to length
+B.GE exitSS
+ADD X0, X9, XZR
+ADD X1, X11, XZR 
+ADD X2, X10, XZR
+BL findSmallest
+ADD X13, X0, XZR // save findSmallest return
+LSL X14, X13, #3 // findSmallest*8
+ADD X0, X14, X9 
+LSL X15, X11, #3 // i*8
+ADD X1, X15, X9
+BL swap
+ADDI X11, X11, #1 //increment i
+B sortLoop
+
+exitSS:
+LDUR X9, [SP, #0]
+LDUR X10, [SP, #8]
+LDUR X11, [SP, #16]
+LDUR X12, [SP, #24]
+LDUR X13, [SP, #32]
+LDUR X14, [SP, #40]
+LDUR X15, [SP, #48]
+LDUR LR, [SP, #56]
+ADDI SP, SP, #64
+BR LR
+
+
+iterBinSearch:
+SUBI SP, SP, #48
+STUR LR, [SP, #40]
+STUR X13, [SP, #32]
+STUR X12, [SP, #24]
+STUR X11, [SP, #16]
+STUR X10, [SP, #8]
+STUR X9, [SP, #0]
+
+ADD X9, X1, XZR // save left in X9
+ADD X10, X2, XZR // save right in X10
+
+iterLoop:
+SUBS X11, X9, X10 // compare left to right
+B.GT notFound // leave loop
+SUB X12, X9, X10 // r-l
+LSR X12, X12, #1 // divide (r-l)/2
+ADD X12, X12, X10 // m = l + (r-l)/2
+LSL X13, X12, #3 // m * 8
+ADD X13, X13, X0 // address for array[m]
+LDUR X13, [X13, #0] //array[m]
+SUBS X11, X13, X3 //compare array[m] and searchValue
+B.EQ returnIBS // return if array[m] == searchValue
+B.LT lesser // go if array[m] < value
+SUBI X10, X12, #1 //right = m - 1
+B iterLoop
+lesser:
+ADDI X9, X12, #1 // left = m+1 
+B iterLoop
+notFound:
+SUBI X12, XZR, #1
+
+returnIBS:
+ADD X0, X12, XZR //return X12
+
+LDUR X9, [SP, #0]
+LDUR X10, [SP, #8]
+LDUR X11, [SP, #16]
+LDUR X12, [SP, #24]
+LDUR X13, [SP, #32]
+LDUR LR, [SP, #40]
+ADDI SP, SP, #48
+BR LR
+
+recBinSearch:
+SUBI SP, SP, #48
+STUR LR, [SP, #40]
+STUR X13, [SP, #32]
+STUR X12, [SP, #24]
+STUR X11, [SP, #16]
+STUR X10, [SP, #8]
+STUR X9, [SP, #0]
+
+ADD X9, X1, XZR // save left
+ADD X10, X2, XZR // save right
+SUBS X11, X9, X10 // compare left and right
+B.GT endRecursion // go to endRecursion if l > r
+SUB X12, X10, X9 // m = r - l
+LSR X12, X12, #1 // m = (r-l)/2
+ADD X12, X9, X12 // m = l + (r-l)/2
+LSL X13, X12, #3 // m*8
+ADD X13, X13, X0 // address for array[m]
+LDUR X13, [X13, #0] //array[m]
+SUBS X11, X13, X3 // compare array[m] and searchValue
+B.EQ returnRBS // return if array[m] == searchValue
+B.GT arrgvalue // if array[m] > value
+ADDI X1, X12, #1 // left = m+1
+LDUR X9, [SP, #0]
+LDUR X10, [SP, #8]
+LDUR X11, [SP, #16]
+LDUR X12, [SP, #24]
+LDUR X13, [SP, #32]
+LDUR LR, [SP, #40]
+ADDI SP, SP, #48
+B recBinSearch
+arrgvalue:
+SUBI X2, X12, #1 // right = m-1
+LDUR X9, [SP, #0]
+LDUR X10, [SP, #8]
+LDUR X11, [SP, #16]
+LDUR X12, [SP, #24]
+LDUR X13, [SP, #32]
+LDUR LR, [SP, #40]
+ADDI SP, SP, #48
+B recBinSearch
+
+endRecursion:
+SUBI X12, XZR, #1 // m = -1
+returnRBS:
+ADD X0, X12, XZR // return m
+
+LDUR X9, [SP, #0]
+LDUR X10, [SP, #8]
+LDUR X11, [SP, #16]
+LDUR X12, [SP, #24]
+LDUR X13, [SP, #32]
+LDUR LR, [SP, #40]
+ADDI SP, SP, #48
+BR LR
+
+end:
+DUMP
