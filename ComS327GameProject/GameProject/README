@@ -1,0 +1,57 @@
+
+This program is based on Schaefer's code. Outside of additions to the existing
+functions and the creation of new functions, all code is his.
+
+New Functions: To my memory, 
+		in move.cpp: spellAttack, rangedAttack, and blastArea. These functions essentially do what they say, the ranged attack is the basic ranged attack function, whereas the spellAttack function is the spell function that takes in specifications
+		For what sort of spell should be thrown out and at what cost. blastArea is a function for the 3x3 attack spell.
+		
+		in io.cpp: io_redisplay_non_terrain_aiming and io_aimranged. The former is essentially identical to its namesake, but with the requirement that all objects and items are within the illuminated area. The io_aimranged fn is where the bulk 
+		of this projects io occurs. It holds the ranged combat and the spell combat inputs.
+		
+		in pc.cpp: costTest and finSpellCost. costTest is a fn that essentially tests the waters on mana costs for a single spell, and it calls to finSpellCost to do so.
+		
+		
+
+Usage: Ranged combat requires a bow of some sort. the 'r' key begins the aiming and the 't' key fires. Normal keys for scrolling and the 'Q' and escape keys should be valid abort keys.
+	Spell combat is a bit more complicated. There are three spells, two single target spells, one weak and one powerful, and one 3x3 spell. These spells are tied to the 'a', 'b', and 'c' keys respectively. They are also tied to three different equipable
+	 items, the Wand, the Scroll, and the Book respectively. With a caveat, there is only one spell item slot. But this does not mean you require the corresponding items to cast the spells, it only means that each item conveys different benefits that
+	 would be weighed against others (if I had formulated a more informative io that would inform of these benefits more clearly). So the Book item, when equipped, greatly reduced the cost and increases the damage of the 3x3 area spell, but it also
+	 reduces the cost and increases the damage of the other spells to a lesser degree. 
+	 
+	 This includes rolling. To continue with the example, when the Book item is equipped, and the area spell is cast then mana decreases less, but damage is rolled on the item itself instead of using the default for the spell.
+	 The other spells would use the skewed damage values instead of the defaults and would also have somewhat reduced mana costs.
+	 
+	 On actaul usage, 'p' activates spell aiming, i, m, and g each provide further information, mana costs, and clear the view, respectively.
+	 'a', 'b', 'c' each toggle the spells. 
+	 
+	 It is worth noting that the message system does not seem to interact well with the aiming, so you may have to go around firing randomly to see the effect. Mana regens at a rate of 10 per player turn. 
+	 
+	 Here is the defined values in my pc.h file for the precice values. T
+	 hese values were meant to be balanced and the skewed value system was supposed to be more dynamic, with each (spell) item being rolled for some mana reduction, but that did not pan out.
+		
+//Default cost for all spells
+# define costScroll 80
+# define costBook 60
+# define costWand 30
+
+//Default Reducers for costs for matching spell types with the corresponding item. i.e finalCost = costBook - reduxBook
+# define reduxScroll 40
+# define reduxBook 30
+# define reduxWand 15
+
+//Default Reducers for costs for skewed spell types. i.e finalCost = costBook - skewedBook
+# define skewScroll 25
+# define skewBook 15
+# define skewWand 10
+
+//Default Damage without equipment.
+# define DamScroll 30
+# define DamBook   15
+# define DamWand   20
+
+//Default skewed damage with the wrong equipment
+# define skewdamgScroll 35
+# define skewdamgBook 20
+# define skewdamgWand 25
+

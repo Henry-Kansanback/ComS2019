@@ -1,0 +1,163 @@
+
+
+Using base version of Schaefer's code circa hw 1.08
+4/18/19: Began to work on ranged attacks. Creating new io mover based on previous lookat fn.
+4/19/19: Began building new combat fn to use new io. Usage of new fn based on requirement that a ranged weapon is equipped.
+4/20/19: Mostly finished ranged combat. Ran into segmentation faults. Debugged and fixed.
+4/23/19: Began Spell and Mana functionality. Built upon previous ranged aiming io.
+4/25/19: Decided on multiple spells and began implementation of each. Finalized base ranged combat, cleared out most bugs.
+4/26/19: Created the Book/Scroll/Wand spell slot or simply the magic spell slot. Equipped item will have different affects on different spell costs and damage outputs. Created the skewed damage and mana cost system, where the corresponding spell will be more powerful
+	 But other spells will benefit as well. Wands correspond to the weak, single target spell. Scrolls correspond to the powerful, single target spell, and books correspond to the somewhat powerful 3x3 area spell, that affects all characters in an area.
+	 Finished creating mana systems. Worked on targeting and damage. Worked on io info output. Finalized most systems, tested and debugged. Seems done :) .
+
+
+
+
+
+
+Switched to Schaefer's newest code.
+4/12/19: Began project. Began changes to code in order to have monsters ignore eachother in move.cpp. Worked on Lookat code. Finished Lookat code.
+4/13/19: Added monster nudging functionality in move.cpp and completed monster ignoring. Began to change combat system to utilize hp and damage dice. Mostly completed, initial tests successful.
+4/14/19: Finished combat system changes. Began work on io.cpp and pc.cpp for equipment functionality. Utilized existing code as framework for new code. Created the outline of the equipment system. Finished movement system changes. Created drop functionality and
+	  initial unequip system.
+4/17/19: Debugged existing equipment system. Found error in display, which resulted in nonsense characters being printed fromt the io. Fixed error. Created carry bag system. Created equip function and discovered better methodology for running through equipment and
+	  carry bag arrays, scrapped previous system as a result, replacing it with much simpler system. Finished off equipment system, then finished bag system. Finalized and Debugged.
+
+
+
+
+
+4/6/19: Began to read newest code drop. Started working in Descriptions.cpp for new method, make_monsters(). Fiddled with character.h and npc.h for them both to have necessary data elements for dungeon gen and operation. Found that all monsters were gening as
+	Junior barbarians. Debugging needed.
+4/7/19: After much debugging, determined new method is useless. Transferred some of the existing work to gen_monsters(), set up data saving (from the parsed descriptions objects) commented out for testing purposes. Had first successes with monster gening.
+	Made items.h and items.cpp with the necessary data fields, mimiced gen_monsters() for gen_objects in items.cpp.
+4/10/19: Created new 2d array in dungeon of items objects. Finished items.cpp. Updated io.cpp and dungeon.cpp to utilize and set up items.cpp. Items are now gening perfectly. (Side Note) Finding PC to be very easily caught unaware with monsters sneaking up easily.
+
+
+
+
+
+
+Switched to Schaefer's newest code.
+3/29/19: Began to work on project. Began with printing out file as a way of reading it. Needs further work.
+3/30/19: Worked on the print function. Got stuck on file input and reading. Decided to mimic read_map method in dungeon.cpp. Created bare-bones structure of printer/reader in npc.cpp.
+3/31/19: Wrote a dice.h class for dice objects. Continued working on printer method until I got some functionality. I then realized that I had been writing everything wrong and that I needed to save the data then print the saved info.
+	Ran into unusual issue throughout the project, where lines would only print when on seperate lines and tabbed out (4/3/19: will see when the program is run)
+4/2/19: Created the descriptor.h class which holds all monster/npc txt file data. Continued to research whitespace and file iterator, since it appears that the file saving issue has to do with the fstream/ifstream iterator.
+4/3/19: Finalized what I could, found that I could easily print from the file, but it became imensely difficult to print from saved data.
+
+
+
+
+
+
+
+
+3/20: Began to work on project. Began by converting code to C++. Need to research how to change all of the structs safely.
+
+3/21: Continued figuring out how precisely to change structs. Also began to work on illumination/fog-of-war. Started by trying to create a character array in the pc class, almost immediately realized that a terrain map would be better suited for the projects
+purposes. Ran into some bugs which all seem to be involving in scope (terrain enum wasn't available to pc.h).
+
+3/22: Finalized conversion to C++ with the exception of the heap.cpp and heap.h. Tried to fill fog of war terrain map with spaces (walls) as a default in dungeon initializer, but ran into errors (many, many errors). After some difficulty created a new function
+in pc.cpp called smooth_seen which runs in the config_pc function. Created basic structure (not struct) for how the illumination will work.
+Finished off illumination for the most part by creating seperate rendering functions so normal rendering isn't bogged down by as much nonsense (There are now 4 functioning renderers in total, 2 for the unfogged dungeon and 2 for the fogged dungeon, one of each of
+those are for the teleport cursor).
+
+3/23: Ran into some iteration oddities in how much of the normal terrain map is being loaded into the pc seen terrain map and some corrolary oddities in the rendering function. Did extensive testing to determine what will give a 5x5 area instead of the odd 
+seen-but-not-seen rendering which had been happening and it seems to mostly be fixed. Began and finished defog functionality. Began teleport functionality.
+
+3/24: Created new cursor movement function in move.cpp, had to mimic parts of the do_move code in order to accomplish the basic need of the fn. Mostly finished cursor movement function except for the (for whatever reason) invisible cursor.
+      Attempted to debug the problem to no success, teleportation seems to work exactly as intended except the cursor (meant to be '*') doesn't show up. (If I'm not making this apparent enough, I looked through just about everything and I couldn't find a thing).
+      
+3/27: Final attempts to fix cursor. Ran into what seems to be an extremely rare segmentation fault around 4 times, but code seems to be otherwise functional. Decided to ignore minor flaw.
+
+
+
+
+
+
+
+3/1: Began to use Shaefers most recent code, need to analyze it before use.
+3/2: Began to code in the move() and main functions and began to create a new rendering function. (In a surprisingly short period of time) Got PC control to work fully, although it crashes when it hits walls. Fixed wall crashing bug.
+     Got message lines to work as well.
+3/3: Started to create new function for monster listing and finished up controls. Got staircases to work except PC spawns in walls, will be looking at Schaefer's PC placement methods.
+3/5: Added minor details and worked more on monster list fn. Fully finished PC placement and staircase functionality.
+3/6: Finished monster list. Ironed out most bugs excluding some odd ones that thus far haven't impeded the program. 
+
+
+
+2/22: Began to code. Copied previous djikstra algorithm.
+2/23: Ran into conceptual problems that prevented further progress (i.e what is "smart", how can it remember). Had problems with the issue of buffering the distance maps as well.
+2/24: Added further functionality. if else logic only at the moment.
+2/25: Scrapping everything due to lecture...
+2/27: Worked through most of the rebuilding of the code, but still have some issues with -nummon and strange segmentation errors that I have mostly been able to narrow down to iteration errors, but they still persist, Tunneling works
+	in between segmentation faults. Submitting half finished.
+
+
+
+
+2/11: Switched to Schaefer's code. Began deciphering what the functions mean, 
+	how to utilize them, etc.
+	
+2/12: Started to understand the gist of the base program and began to create new
+	Dijkstra algorithm to create the tunneling monster map. Created the
+	eight checks necessary for the Dijkstra alg to work based on the 
+	preexisting ones.
+	Created the method of rendering the distance map with the idea of the
+	cooridor functions "stopper" (return; if() block within the while() 
+	block).
+	Ran the function for the first time with a section of printf()'s which
+	presented the data in a 3x3 section, debugged from there. Found issues 
+	with the many arrays +1's and -1's, fixed them for the most part. 
+	. Began the non-tunneling monster code, based on the tunneling monsters
+	distance mapper.
+
+2/13: Managed to get the first function to work fully. Continued working on 
+	non-tunneling monster code.
+	Stripped parts of tunneling monster code that were unecessary in the
+	non-tunneling. Minimal debugging necessaary.
+	After lecture stripped away some of the unecessary bits from both 
+	functions. Got non-tunneling function to work fully. I then began 
+	testing both functions to the provided dungeon solutions and found a 
+	problem with the tunneling monster code.
+
+2/14: Couldn't find the issue with the tunneling monster code, but went about 
+	stripping some more unecessary details from both functions.
+2/15: After a semi-lengthy discussion on piazza I found the issue with the
+	tunneling map (it was a "player to tile rather than tile to player" issue).
+	Fixed it, and tested with the provided dungeons comparing with the 
+	provided solutions.
+
+
+
+
+
+1/24: Began initial planning. Experimented with int type for "tile" recognition. This was a very cautious approach that checked the location before even considering placing rooms.
+1/25: Expanded on previous design for creating rooms by creating system for "hypothetical expansion". Essentially, the program would check the northwest, northeast, southwest, and southeast at the minimum bound size (4x3) for potential
+	expansion. This system proved to be very complicated, (I went to lecture at this point and what I've been referring to as the char type approach was explained in lecture).
+1/26: Began to scrap and to convert previous design to the more optimal approach of placing rooms and checking as the rooms are placed if the next tile is a room type.
+1/27: Began to redesign/reconsider the usefulness of second function, it's previous job was supposed to be to generate a room upon command, but the issue of how it would transfer the room to the main()'s dunG came into issue. 
+	Experimenting with only main().
+
+1/29: Constructed the "room writer" and ran the program with some success. Found and ironed out some minor issues with the room placer.
+	Began constructing corridors. The initial for() loop group devoted to 
+	this functionality seemed to be semi-successful, but with issues involving the directions the corridors were being placed in. Ran the program a number of times
+	and observed that the corridors had the correct lengths, but were not going in the correct direction.
+	After numerous trial solutions, the solution was that the corridors were being written from centx1 and centy1 instead of from centx0 and centy0 which is what the variables were being calculated from.
+	Began up and down staircase placement functionality
+1/31: Corrected a minor error in corridor placement functionality involving corners not being placed.
+	Finalized up and down staircase placement and verified its consistent
+	functionality.
+	
+2/5: Began initial planning for program. First attempted to code using provided code, but
+found that I couldn't make any sense of it.
+
+2/6: Began to rewrite my original code using structs. Debugged some pointer issues.
+Began to write reader function with limited success.
+
+2/7: Continued to write reader function with minimal success.
+
+2/8: Finally had some success and reader function works perfectly for my set-up. Began to
+work on writing functionality. Encountered a mass of free() errors from unknown sources.
+Debugged at random. Fixed the majority of bugs and completed writing functionality to
+save data but not display, due to segmentation faults. Finished coding.
